@@ -2,21 +2,36 @@ import { Button, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { createAccount } from '../DataServices/Dataservices';
+import { Props } from '../type';
 
 const LoginFormComponent = () => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [edit, setEdit] = useState<boolean>(true);
 
-    const navigate = useNavigation()
+    const navigate = useNavigation<Props>()
     
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const userData = {
             username: username,
             password: password
         }
 
-        navigate.navigate("ProfileScreen")
+        if(edit){
+          let token: IToken = await login(userData)
+          console.log(token);
+          if(token){
+            navigate.navigate("ProfileScreen")
+          }
+        } else {
+          createAccount(userData)
+        }
+
+    }
+
+    const handleChange = () => {
+      setEdit(!edit);
     }
 
   return (
@@ -36,7 +51,7 @@ const LoginFormComponent = () => {
       secureTextEntry
       />
       <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '75%'}}>
-        <Text style={{color: "blue", textDecorationLine: "underline"}}>{edit ? 'Register' : 'Login'}</Text>
+        <Text onPress={handleChange} style={{color: "blue", textDecorationLine: "underline"}}>{edit ? 'Register' : 'Login'}</Text>
         <Button title="Submit" onPress={handleSubmit}/>
       </View>
     </View>
@@ -58,5 +73,6 @@ const styles = StyleSheet.create({
         borderColor:"#ccc",
         backgroundColor: "white",
         marginBottom: 10,
+        paddingHorizontal: 10,
     }
 })

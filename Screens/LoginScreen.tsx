@@ -6,7 +6,7 @@ const LoginScreen = () => {
   return (
     <ImageBackground source={require('../assets/pickture.jpg')} style={styles.backGround}>
 
-        <View>
+        <View style={styles.Container}>
             <LoginFormComponent/>
         </View>
 
@@ -22,5 +22,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
 
+    },
+    Container: {
+      backgroundColor: 'rbga(255, 255, 255, 0.8)',
+      borderRadius: 10,
     }
 })

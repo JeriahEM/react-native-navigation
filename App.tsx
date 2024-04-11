@@ -4,7 +4,7 @@ import LoginScreen from './Screens/LoginScreen';
 import ProfileScreen from './Screens/ProfileScreen';
 import DataScreen from './Screens/DataScreen';
 
-  const Stack = createNativeStackNavigator()
+  const Stack = createNativeStackNavigator<appNativeParamsList>()
 
 export default function App() {
   return (
