@@ -2,8 +2,9 @@ import { Button, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { createAccount } from '../DataServices/Dataservices';
 import { Props } from '../type';
+import { IToken } from '../Interfaces/Interfaces';
+import { createAccount, login } from '../DataServices/Dataservices';
 
 const LoginFormComponent = () => {
     const [username, setUsername] = useState<string>('');
@@ -12,22 +13,23 @@ const LoginFormComponent = () => {
 
     const navigate = useNavigation<Props>()
     
-    const handleSubmit = async () => {
-        const userData = {
-            username: username,
-            password: password
+    const handleSubmit = async() => {
+      const userData = {
+        username: username,
+        password: password
+      }
+  
+      if(edit){
+        let token: IToken = await login(userData);
+        // checks if our login is successful
+        if(token){
+          console.log(token)
+          navigate.navigate("ProfileScreen")
         }
-
-        if(edit){
-          let token: IToken = await login(userData)
-          console.log(token);
-          if(token){
-            navigate.navigate("ProfileScreen")
-          }
-        } else {
-          createAccount(userData)
-        }
-
+      }else {
+        createAccount(userData)
+      }
+  
     }
 
     const handleChange = () => {

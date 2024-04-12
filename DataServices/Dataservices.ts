@@ -1,37 +1,40 @@
 import { IToken, IUserInfo } from "../Interfaces/Interfaces";
 
-const url = 'https://bioapijd.azurewebsites.net'
+const url = 'https://blogapijd.azurewebsites.net';
 
-export const createAccount = async (createUser: IUserInfo) => {
-    const res= await fetch(url + '/User/AddUser', {
-        method : "POST" ,
+export const createAccount = async(createUser: IUserInfo) => {
+    const res = await fetch(url + '/User/AddUser', {
+        method: "POST",
         headers: {
-            'Content-Type' : "application/json"
+            'Content-Type': "application/json"
         },
         body: JSON.stringify(createUser)
     });
+
     if(!res.ok){
-        const message = `An Error has occured ${res.status}`
+        const message = `An Error has occurred ${res.status}`
         throw new Error(message);
     }
+
     const data = await res.json();
-    return data
+    console.log(data)
+    return data;
 }
 
-export const login = async (userInfo:IUserInfo) => {
-
+export const login = async (userInfo: IUserInfo) => {
     const res = await fetch(url + '/User/Login', {
-        method : "POST" ,
+        method: "POST",
         headers: {
-            'Content-Type' : "application/json"
+            'Content-Type': "application/json"
         },
         body: JSON.stringify(userInfo)
     });
+
     if(!res.ok){
-        const message = `An Error has occured ${res.status}`
+        const message = `An Error has occurred ${res.status}`
         throw new Error(message);
     }
 
-    const data: IToken = res.json();
+    const data: IToken = await res.json();
     return data;
 }
