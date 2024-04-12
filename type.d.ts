@@ -9,4 +9,7 @@ export type appNativeParamsList = {
     }
 }
 
-export type Props = NativeStackScreenProps<appNativeParamsList, LoginScreen, ProfileScreen, DataScreen>
+export type Props = NativeStackScreenProps<appNativeParamsList>
+export type LoginProps = Props ['navigation']
+
+export type DataProps = NativeStackScreenProps<appNativeParamsList, 'DataScreen'>

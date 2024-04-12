@@ -2,7 +2,7 @@ import { Button, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Props } from '../type';
+import { LoginProps, Props } from '../type';
 import { IToken } from '../Interfaces/Interfaces';
 import { createAccount, login } from '../DataServices/Dataservices';
 
@@ -11,7 +11,7 @@ const LoginFormComponent = () => {
     const [password, setPassword] = useState<string>('');
     const [edit, setEdit] = useState<boolean>(true);
 
-    const navigate = useNavigation<Props>()
+    const navigate = useNavigation<LoginProps>()
     
     const handleSubmit = async() => {
       const userData = {
@@ -38,7 +38,7 @@ const LoginFormComponent = () => {
 
   return (
     <View style={styles.Container}>
-      <Text style={{ paddingBottom: 25, fontSize: 35, color: "white" }}>{edit ? 'Login Page' : 'Late Registration Page'}</Text>
+      <Text style={{ paddingBottom: 25, fontSize: 35,  }}>{edit ? 'Login Page' : 'Late Registration Page'}</Text>
       <TextInput
       style={styles.Input}
       placeholder='Username'
